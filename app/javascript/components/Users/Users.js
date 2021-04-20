@@ -28,11 +28,10 @@ const Users = () => {
   const classes = useStyles()
   const [users, setUsers] = useState([])
   const [user, setUser] = useState([])
-
   
   useEffect(() => {
     axios.get('/api/v1/users.json').then( res => setUsers(res.data.data) ).catch( err => console.log(err) )
-  }, [])
+  }, [users.length])
 
   const grid = users.map(item => {
     return (
@@ -47,8 +46,15 @@ const Users = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const csrfToken = document.querySelector('[name=csrf-token]').content
     if (checkProperties(user)) {
-      axios.post('/api/v1/users', {user}).then(res => console.log(res)).catch(err => console.log(err))
+      const regex = /^https?:\/\/([\w\d\-]+\.)+\w{2,}(\/.+)?$/
+      if (user.image_url.match(regex)) {
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+        axios.post('/api/v1/users', {user}).then(res => {
+          setUser({full_name: '', birthday: '', gender: '', image_url: ''})
+        }).catch(err => console.log(err))
+      } else alert("Please use the correct url form 'http://example.com'.");
     }
   }
 
@@ -65,7 +71,7 @@ const Users = () => {
           </Grid>
         </Typography>
       </Container>
-      <UserForm handleSubmit={handleSubmit} handleChange={handleChange} user={user}/>
+      <UserForm handleSubmit={handleSubmit} handleChange={handleChange} setUser={setUser} user={user}/>
     </Fragment>
   )
 }
