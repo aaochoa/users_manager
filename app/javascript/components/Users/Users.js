@@ -3,8 +3,16 @@ import axios from 'axios'
 import User from "./User"
 import { makeStyles } from '@material-ui/core/styles'
 import { CssBaseline, Typography, Container, Grid } from '@material-ui/core'
+import UserForm from "./UserForm";
 
-const useStyles = makeStyles({
+function checkProperties(obj) {
+  for (var key in obj) {
+    if (obj[key] == null || obj[key] == "") return false;
+  }
+  return true;
+}
+
+const useStyles = makeStyles(() => ({
   cardsTitle: {
     margin: 'auto',
     fontSize: 25,
@@ -14,24 +22,35 @@ const useStyles = makeStyles({
     marginTop: 10,
     marginBottom: 10
   }
-})
+}))
 
 const Users = () => {
   const classes = useStyles()
   const [users, setUsers] = useState([])
+  const [user, setUser] = useState([])
+
   
   useEffect(() => {
     axios.get('/api/v1/users.json').then( res => setUsers(res.data.data) ).catch( err => console.log(err) )
-  }, users.length)
+  }, [])
 
   const grid = users.map(item => {
     return (
-      <User 
-      key={item.attributes.full_name} 
-      attributes={item.attributes}
-      />
+      <User key={item.attributes.full_name} attributes={item.attributes}/>
     )
   })
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setUser(Object.assign({}, user, {[e.target.name]: e.target.value}))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (checkProperties(user)) {
+      axios.post('/api/v1/users', {user}).then(res => console.log(res)).catch(err => console.log(err))
+    }
+  }
 
   return (
     <Fragment>
@@ -46,8 +65,7 @@ const Users = () => {
           </Grid>
         </Typography>
       </Container>
-      <div className="container">
-      </div> 
+      <UserForm handleSubmit={handleSubmit} handleChange={handleChange} user={user}/>
     </Fragment>
   )
 }

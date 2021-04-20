@@ -25,8 +25,8 @@ users = User.create([
   },
   {
     full_name: "Eminem",
-    gender: "Female",
+    gender: "Male",
     birthday: "1983-07-23 09:00:20 -0500",
-    image_url: "https://i.insider.com/5b3f8c1745aaf52d008b4938?width=500"
+    image_url: "https://i.insider.com/5b3f8cff447aad22008b4c2f?width=500"
   }
 ])
