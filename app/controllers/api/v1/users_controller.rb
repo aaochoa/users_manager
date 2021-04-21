@@ -42,7 +42,7 @@ module Api
       
       private
         def user_params
-          params.require(:user).permit(:full_name, :date_of_bith, :genre, :image_url)
+          params.require(:user).permit(:full_name, :birthday, :gender, :image_url)
         end
         
     end

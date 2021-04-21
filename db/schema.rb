@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2021_04_15_150215) do
 
   create_table "users", force: :cascade do |t|
     t.string "full_name"
-    t.datetime "date_of_birth"
+    t.datetime "birthday"
     t.string "gender"
     t.string "image_url"
     t.datetime "created_at", precision: 6, null: false

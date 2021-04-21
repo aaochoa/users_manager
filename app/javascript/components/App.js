@@ -1,7 +1,16 @@
-import React from "react";
+import React from "react"
+import 'fontsource-roboto'
+import { Route, Switch } from "react-router-dom"
+import Users from './Users/Users'
+import User from './User/User'
 
 const App = () => {
-  return (<div>Hello fam</div>)
+  return (
+    <Switch>
+      <Route exact path="/" component={Users}/>
+      <Route exact path="/users/:id" component={User}/>
+    </Switch>
+  )
 }
 
 export default App 
