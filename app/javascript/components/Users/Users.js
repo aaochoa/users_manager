@@ -28,10 +28,11 @@ const Users = () => {
   const classes = useStyles()
   const [users, setUsers] = useState([])
   const [user, setUser] = useState([])
+  const [refreshKey, setRefreshKey] = useState(0)
   
   useEffect(() => {
     axios.get('/api/v1/users.json').then( res => setUsers(res.data.data) ).catch( err => console.log(err) )
-  }, [users.length])
+  }, [refreshKey])
 
   const grid = users.map(item => {
     return (
@@ -53,9 +54,10 @@ const Users = () => {
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
         axios.post('/api/v1/users', {user}).then(res => {
           setUser({full_name: '', birthday: '', gender: '', image_url: ''})
+          setRefreshKey(oldKey => oldKey +1)
         }).catch(err => console.log(err))
       } else alert("Please use the correct url form 'http://example.com'.");
-    }
+    } else alert("Please fill all the fields.")
   }
 
   return (

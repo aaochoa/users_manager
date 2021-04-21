@@ -58,7 +58,7 @@ const UserForm = (props) => {
             </FormControl>
             <FormControl>
               <InputLabel htmlFor="imageURL">Image URL</InputLabel>
-              <Input id="imageURL" name="image_url" onChange={props.handleChange} defaultValue="" value={props.user.image_url}/>
+              <Input id="imageURL" name="image_url" onChange={props.handleChange} value={props.user.image_url}/>
             </FormControl>
             <FormControl className={classes.formControl}>
               <InputLabel id="genderSelect">Gender</InputLabel>
@@ -67,7 +67,7 @@ const UserForm = (props) => {
                 <MenuItem value="Male">Male</MenuItem>
               </Select>
             </FormControl>
-            <TextField id="datetime-local" label="Birthday" name="birthday" type="datetime-local" defaultValue="" className={classes.textField} InputLabelProps={{ shrink: true }} onChange={props.handleChange} value={props.user.birthday}/>
+            <TextField id="datetime-local" label="Birthday" name="birthday" type="datetime-local" className={classes.textField} InputLabelProps={{ shrink: true }} onChange={props.handleChange} value={props.user.birthday}/>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Cancel
